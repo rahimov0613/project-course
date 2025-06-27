@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Course } from "src/course/entities/course.entity";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 export type UserRole = 'student' | 'teacher' | 'admin';
 
@@ -21,4 +22,6 @@ export class User {
 
     @Column({ type: 'varchar', default: 'student' })
     role: UserRole;
+    @OneToMany(() => Course, (course) => course.teacher)
+    courses: Course[];
 }
