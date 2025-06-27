@@ -19,7 +19,7 @@ export class AuthService {
       password: hashedPassword,
     });
     const user = typeof createdUser === 'string'
-      ? await this.usersService.findById(createdUser)
+      ? await this.usersService.findOne(createdUser)
       : createdUser;
     return this.generateTokens(user);
   }
@@ -39,7 +39,7 @@ export class AuthService {
     const payload = await this.jwtService.verifyAsync(refreshToken, {
       secret: process.env.JWT_REFRESH_SECRET,
     });
-    const user = await this.usersService.findById(payload.id);
+    const user = await this.usersService.findOne(payload.id);
     if (!user) {
       throw new UnauthorizedException('User not found');
     }

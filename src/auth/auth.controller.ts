@@ -26,8 +26,7 @@ export class AuthController {
       secure: false,
     });
     return { accessToken, refreshToken };
-  }
-
+  } 
   @Post('refresh')
   async refresh(@Req() req:Request){
     const refreshToken = req.cookies['refresh_token'];

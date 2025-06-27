@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
+import { User } from './users/entities/user.entity';
 
 @Module({
   imports: [
@@ -11,8 +12,8 @@ import { UsersModule } from './users/users.module';
       type: 'postgres',
       url: process.env.DATABASE_URL,
       autoLoadEntities: true,
+      entities: [User],  
       synchronize: true,
-      entities: [__dirname + '/**/*.entity{.ts,.js}'],  
     }),
     AuthModule,
     UsersModule
