@@ -1,0 +1,24 @@
+import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+
+export type UserRole = 'student' | 'teacher' | 'admin';
+
+@Entity()
+export class User {
+    @PrimaryGeneratedColumn()
+    id: number;
+
+    @Column()
+    name: string;
+
+    @Column()
+    username: string;
+
+    @Column({ unique: true })
+    email: string
+
+    @Column()
+    password: string
+
+    @Column({ type: 'varchar', default: 'student' })
+    role: UserRole;
+}
