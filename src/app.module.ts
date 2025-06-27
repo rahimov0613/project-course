@@ -6,6 +6,7 @@ import { UsersModule } from './users/users.module';
 import { User } from './users/entities/user.entity';
 import { CourseModule } from './course/course.module';
 import { ModelModule } from './model/model.module';
+import { EnrollmentModule } from './enrollment/enrollment.module';
 
 @Module({
   imports: [
@@ -20,7 +21,8 @@ import { ModelModule } from './model/model.module';
     AuthModule,
     UsersModule,
     CourseModule,
-    ModelModule
+    ModelModule,
+    EnrollmentModule
   ],
   controllers: [],
   providers: [],

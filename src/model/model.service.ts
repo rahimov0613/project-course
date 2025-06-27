@@ -10,16 +10,37 @@ import { CourseService } from 'src/course/course.service';
 export class ModelService {
   constructor(
     @InjectRepository(Model)
-    private modelRepo:Repository<Model>,
-    private courseService:CourseService,
-  ){}
+    private modelRepo: Repository<Model>,
+    private courseService: CourseService,
+  ) { }
 
-  async create(dto:CreateModelDto):Promise<Model>{
+  async create(dto: CreateModelDto): Promise<Model> {
     const course = await this.courseService.findOne(dto.courseId);
-    if(!course){
+    if (!course) {
       throw new Error('Bunday kurs mavjud emas');
     }
     const model = this.modelRepo.create({ ...dto, course });
     return this.modelRepo.save(model);
+  }
+  findAll() {
+    return this.modelRepo.find({ relations: ['course'] })
+  }
+  async findByCourseId(courseId: number) {
+    return this.modelRepo.find({ where: { course: { id: courseId } } });
+  }
+  async update(id: number, dto: UpdateModelDto) {
+    const model = await this.modelRepo.findOneBy({ id });
+    if(!model){
+      throw new Error('Bunday model mavjud emas');
+    }
+    Object.assign(model,dto);
+    return this.modelRepo.save(model);
+  }
+  async remove(id:number){
+    const model = await this.modelRepo.findOneBy({id});
+    if(!model){
+      throw new Error('Bunday model mavjud emas');
+    }
+    return this.modelRepo.remove(model);
   }
 }

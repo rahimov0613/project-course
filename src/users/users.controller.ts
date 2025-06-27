@@ -17,22 +17,25 @@ export class UsersController {
   }
 
   @Get()
+  @Roles('admin', 'teacher', 'student')
   findAll() {
     return this.usersService.findAll();
   }
 
   @Get(':id')
+  @Roles('admin', 'teacher', 'student')
   findOne(@Param('id') id: string) {
     return this.usersService.findOne(+id);
   }
 
-  @Roles('admin') 
   @Patch(':id')
+  @Roles('admin') 
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     return this.usersService.update(+id, updateUserDto);
   }
 
   @Delete(':id')
+  @Roles('admin')
   remove(@Param('id') id: string) {
     return this.usersService.remove(+id);
   }

@@ -18,11 +18,13 @@ export class CourseController {
   }
 
   @Get()
+  @Roles('admin', 'teacher', 'student')
   findAll() {
     return this.courseService.findAll();
   }
 
   @Get(':id')
+  @Roles('admin', 'teacher', 'student')
   findOne(@Param('id') id: string) {
     return this.courseService.findOne(+id);
   }
@@ -33,8 +35,8 @@ export class CourseController {
     return this.courseService.update(+id, updateCourseDto);
   }
 
-  @Roles('admin')
   @Delete(':id')
+  @Roles('admin')
   remove(@Param('id') id: string) {
     return this.courseService.remove(+id);
   }
