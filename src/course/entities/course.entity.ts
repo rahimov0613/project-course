@@ -1,3 +1,4 @@
+import { Enrollment } from "src/enrollment/entities/enrollment.entity";
 import { Model } from "src/model/entities/model.entity";
 import { User } from "src/users/entities/user.entity";
 import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";

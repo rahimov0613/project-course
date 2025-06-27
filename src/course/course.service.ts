@@ -11,6 +11,7 @@ export class CourseService {
   constructor(
     @InjectRepository(Course)
     private readonly courseRepository: Repository<Course>,
+    @InjectRepository(User)
     private readonly userRepository: Repository<User>
   ) { }
 

@@ -22,6 +22,10 @@ export class User {
 
     @Column({ type: 'varchar', default: 'student' })
     role: UserRole;
+    
+    @Column()
+    enrollments:number;
+
     @OneToMany(() => Course, (course) => course.teacher)
     courses: Course[];
 }
