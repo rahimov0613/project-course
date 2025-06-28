@@ -3,7 +3,7 @@ import { IsNotEmpty, IsNumber, IsString } from "class-validator";
 export class CreateModelDto {
     @IsString()
     @IsNotEmpty()
-    titile:string;
+    title:string;
 
     @IsNumber()
     courseId:number;

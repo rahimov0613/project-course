@@ -41,3 +41,4 @@ export class LessonsController {
     return this.lessonsService.remove(+id);
   }
 }
+ 

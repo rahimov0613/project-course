@@ -46,6 +46,8 @@ export class LessonsService {
     if(!lesson){
       throw new Error('Bunday dars mavjud emas');
     }
+    console.log(dto);
+    
     Object.assign(lesson,dto);
     return this.lessonRepo.save(lesson);
   }

@@ -1,21 +1,28 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, Res, Req } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { RegisterAuthDto } from './dto/register-auth.dto';
-import { loginAuthDto} from './dto/login-auth.dto';
+import { loginAuthDto } from './dto/login-auth.dto';
 import { Request, Response } from 'express';
+
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(private readonly authService: AuthService) { }
 
   @Post('register')
-  async register(@Body() dto:RegisterAuthDto, @Res({passthrough:true})res:Response){
-    const {accessToken,refreshToken} = await this.authService.register(dto)
-    res.cookie('refresh_token',refreshToken,{
-      httpOnly:true,
-      secure:false
+  async register(
+    @Body() dto: RegisterAuthDto,
+    @Res({ passthrough: true }) res: Response,
+  ) {
+    const { accessToken, refreshToken } = await this.authService.register(dto);
+
+    res.cookie('refresh_token', refreshToken, {
+      httpOnly: true,
+      secure: false, 
+      sameSite: 'lax',
     });
-    return { accessToken, refreshToken }
+
+    return { accessToken };
   }
 
   @Post('login')
@@ -23,12 +30,16 @@ export class AuthController {
     const { accessToken, refreshToken } = await this.authService.login(dto);
     res.cookie('refresh_token', refreshToken, {
       httpOnly: true,
-      secure: false,
+      secure: true,
     });
+    res.cookie('access_token',accessToken,{
+      httpOnly:true,
+      secure:true
+    })
     return { accessToken, refreshToken };
-  } 
+  }
   @Post('refresh')
-  async refresh(@Req() req:Request){
+  async refresh(@Req() req: Request) {
     const refreshToken = req.cookies['refresh_token'];
     return this.authService.refresh(refreshToken)
   }

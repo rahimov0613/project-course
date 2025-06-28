@@ -13,16 +13,20 @@ export class AuthService {
     private jwtService: JwtService
   ) { }
   async register(data: RegisterAuthDto) {
-    const hashedPassword = await bcrypt.hash(data.password, 10);
-    const createdUser = await this.usersService.create({
-      ...data,
-      password: hashedPassword,
-    });
-    const user = typeof createdUser === 'string'
+  const hashedPassword = await bcrypt.hash(data.password, 10);
+  const createdUser = await this.usersService.create({
+    ...data,
+    password: hashedPassword,
+  });
+
+  const user =
+    typeof createdUser === 'string'
       ? await this.usersService.findOne(createdUser)
       : createdUser;
-    return this.generateTokens(user);
-  }
+
+  return this.generateTokens(user); 
+}
+
   async login(dto: loginAuthDto) {
     const user = await this.usersService.findByEmail(dto.email);
     if (!user) {
@@ -50,7 +54,7 @@ private async generateTokens(user: User) {
 
     const accessToken = this.jwtService.sign(payload, {
       secret: process.env.JWT_ACCESS_SECRET,
-      expiresIn: '15m',
+      expiresIn: '1d',
     });
 
     const refreshToken = this.jwtService.sign(payload, {
@@ -58,6 +62,6 @@ private async generateTokens(user: User) {
       expiresIn: '7d',
     });
 
-    return { accessToken, refreshToken };
+    return { accessToken, refreshToken  };
   }
 }

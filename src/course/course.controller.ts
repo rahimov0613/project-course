@@ -29,7 +29,7 @@ export class CourseController {
     return this.courseService.findOne(+id);
   }
 
-  @Roles('admin')
+  @Roles('admin',)
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateCourseDto: UpdateCourseDto) {
     return this.courseService.update(+id, updateCourseDto);
