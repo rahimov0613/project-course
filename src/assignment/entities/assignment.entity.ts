@@ -1,6 +1,6 @@
 import { Model } from "src/model/entities/model.entity";
 import { User } from "src/users/entities/user.entity";
-import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Assignment {
@@ -18,4 +18,7 @@ export class Assignment {
 
     @CreateDateColumn()
     submittedAt: Date
+
+    @OneToOne(()=>Result,(result)=>result.assignment)
+    result:Result
 }

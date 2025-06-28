@@ -13,6 +13,7 @@ import { Enrollment } from './enrollment/entities/enrollment.entity';
 import { LessonsModule } from './lessons/lessons.module';
 import { AssignmentModule } from './assignment/assignment.module';
 import { Assignment } from './assignment/entities/assignment.entity';
+import { ResultsModule } from './results/results.module';
 
 @Module({
   imports: [
@@ -30,7 +31,8 @@ import { Assignment } from './assignment/entities/assignment.entity';
     ModelModule,
     EnrollmentModule,
     LessonsModule,
-    AssignmentModule
+    AssignmentModule,
+    ResultsModule
   ],
   controllers: [],
   providers: [],
