@@ -1,6 +1,6 @@
 import { Assignment } from "src/assignment/entities/assignment.entity";
 import { User } from "src/users/entities/user.entity";
-import { Column, CreateDateColumn, Entity, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Result {
@@ -8,6 +8,7 @@ export class Result {
     id: number;
 
     @OneToOne(() => Assignment, (assignment) => assignment.result)
+    @JoinColumn()
     assignment: Assignment
 
     @ManyToOne(() => User)

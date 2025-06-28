@@ -11,3 +11,4 @@ import { Assignment } from 'src/assignment/entities/assignment.entity';
   providers: [ResultsService],
 })
 export class ResultsModule { }
+ 

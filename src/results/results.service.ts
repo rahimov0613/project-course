@@ -39,7 +39,7 @@ export class ResultsService {
   }
 
   async update(id: number, dto: UpdateResultDto) {
-    const result = await this.resultRepo.findOne({ where: { id }, relations: ['assginment'] });
+    const result = await this.resultRepo.findOne({ where: { id }, relations: ['assignment'] });
 
     if (!result) {
       throw new Error('result topilmadi')

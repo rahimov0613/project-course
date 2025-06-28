@@ -12,7 +12,7 @@ import { Roles } from 'src/auth/decorators/role.decorator';
 export class ResultsController {
   constructor(private readonly resultsService: ResultsService) { }
   @Post()
-  @Roles('teacher')
+  @Roles('teacher','admin')
   create(@Req() req: Request, @Body() createResultDto: CreateResultDto) {
     const teacher = req.user as any;
     return this.resultsService.create(teacher, createResultDto);
@@ -26,13 +26,13 @@ export class ResultsController {
   }
 
   @Patch(':id')
-  @Roles('teacher')
+  @Roles('teacher','admin')
   update(@Param('id') id: string, @Body() updateResultDto: UpdateResultDto) {
     return this.resultsService.update(+id, updateResultDto);
   }
-
+  
   @Delete(':id')
-  @Roles('teacher')
+  @Roles('teacher','admin')
   remove(@Param('id') id: string) {
     return this.resultsService.remove(+id);
   }
