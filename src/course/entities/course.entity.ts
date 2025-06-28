@@ -26,8 +26,8 @@ export class Course {
     @ManyToOne(() => User, (user) => user.courses)
     teacher: User;
 
-    @OneToMany(()=>Model,(module)=>module.course)
-    modules: Model[];
+    @OneToMany(()=>Model,(model)=>model.course)
+    model: Model[];
 
     @OneToMany(() =>Enrollment,(enroll)=> enroll.course)
     enrollments: Enrollment[];

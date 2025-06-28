@@ -1,30 +1,35 @@
 import { Injectable } from '@nestjs/common';
-import { CreateEnrollmentDto } from './dto/create-enrollment.dto';
-import { UpdateEnrollmentDto } from './dto/update-enrollment.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Enrollment } from './entities/enrollment.entity';
 import { Repository } from 'typeorm';
+import { Enrollment } from './entities/enrollment.entity';
 import { User } from 'src/users/entities/user.entity';
 import { Course } from 'src/course/entities/course.entity';
+import { CreateEnrollmentDto } from './dto/create-enrollment.dto';
+import { UpdateEnrollmentDto } from './dto/update-enrollment.dto';
 
 @Injectable()
 export class EnrollmentService {
   constructor(
     @InjectRepository(Enrollment)
     private enrollmentRepo: Repository<Enrollment>,
-  ) { }
+  ) {}
 
-  async createEnrollment(user: User, course:Course):Promise<Enrollment> {
-    const existingEnrollment = await this.enrollmentRepo.findOneBy({ user: { id: user.id }, course: { id: course.id } })
+  async createEnrollment(user: number, course: number): Promise<Enrollment> {
+    const existingEnrollment = await this.enrollmentRepo.findOneBy({ user: { id: user }, course: { id: course } });
     if (existingEnrollment) {
       return existingEnrollment;
     }
-    const enrollment = this.enrollmentRepo.create({ user, course })
+    const enrollment = this.enrollmentRepo.create({
+      user: { id: user } as User,
+      course: { id: course } as Course,
+    });
     return this.enrollmentRepo.save(enrollment);
   }
-  async isEnrolled(userId:number, courseId:number){
-    const search = await this.enrollmentRepo.findOneBy({user:{id:userId}, course:{id:courseId}})
-    if(!search){
+  async isEnrolled(userId: number, courseId: number) {
+    const search = await this.enrollmentRepo.findOne({
+      where: { user: { id: userId }, course: { id: courseId } },
+    });
+    if (!search) {
       return false;
     }
     return true;
@@ -44,7 +49,7 @@ export class EnrollmentService {
       relations: ['user', 'course'],
     });
     if (!enrollment) {
-      throw new Error('Bunday ro\'yxatdan o\'tish mavjud emas');
+      throw new Error("Bunday ro'yxatdan o'tish mavjud emas");
     }
     return enrollment;
   }
@@ -56,7 +61,7 @@ export class EnrollmentService {
   async remove(id: number): Promise<void> {
     const enrollment = await this.findOne(id);
     if (!enrollment) {
-      throw new Error('Bunday ro\'yxatdan o\'tish mavjud emas');
+      throw new Error("Bunday ro'yxatdan o'tish mavjud emas");
     }
     await this.enrollmentRepo.remove(enrollment);
   }

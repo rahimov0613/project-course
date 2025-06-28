@@ -9,10 +9,9 @@ export class EnrollmentController {
 
   @Post()
   create(@Body() createEnrollmentDto: CreateEnrollmentDto) {
-    const { user, course } = createEnrollmentDto;
-    return this.enrollmentService.createEnrollment(user, course);
+    const { userId, courseId } = createEnrollmentDto;
+    return this.enrollmentService.createEnrollment(userId, courseId);
   }
-
 
   @Get(':id')
   findOne(@Param('id') id: string) {

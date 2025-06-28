@@ -10,9 +10,9 @@ import { UsersModule } from 'src/users/users.module';
 
 @Module({
   imports: [
+    UsersModule,
     TypeOrmModule.forFeature([Model, Course, User]),
     forwardRef(() => CourseModule),
-    UsersModule,
   ],
   controllers: [ModelController],
   providers: [ModelService],

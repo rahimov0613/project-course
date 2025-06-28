@@ -10,6 +10,7 @@ import { EnrollmentModule } from './enrollment/enrollment.module';
 import { Course } from './course/entities/course.entity';
 import { Model } from './model/entities/model.entity';
 import { Enrollment } from './enrollment/entities/enrollment.entity';
+import { LessonsModule } from './lessons/lessons.module';
 
 @Module({
   imports: [
@@ -25,7 +26,8 @@ import { Enrollment } from './enrollment/entities/enrollment.entity';
     UsersModule,
     CourseModule,
     ModelModule,
-    EnrollmentModule
+    EnrollmentModule,
+    LessonsModule
   ],
   controllers: [],
   providers: [],

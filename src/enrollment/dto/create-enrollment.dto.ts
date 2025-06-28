@@ -1,9 +1,9 @@
-import { IsNumber } from "class-validator";
-import { Course } from "src/course/entities/course.entity";
-import { User } from "src/users/entities/user.entity";
+import { IsNumber } from 'class-validator';
 
 export class CreateEnrollmentDto {
-    user: User;
+    @IsNumber()
+    userId: number;
 
-    course: Course;
+    @IsNumber()
+    courseId: number;
 }

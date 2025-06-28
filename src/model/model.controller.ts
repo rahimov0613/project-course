@@ -4,8 +4,9 @@ import { CreateModelDto } from './dto/create-model.dto';
 import { UpdateModelDto } from './dto/update-model.dto';
 import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
 import { Roles } from 'src/auth/decorators/role.decorator';
+import { RolesGuard } from 'src/auth/guard/roles.guard';
 
-@UseGuards(JwtAuthGuard,Roles)
+@UseGuards(JwtAuthGuard,RolesGuard)
 @Controller('model')
 export class ModelController {
   constructor(private readonly modelService: ModelService) {}
@@ -24,7 +25,7 @@ export class ModelController {
 
   @Get(':id')
   @Roles('admin', 'teacher', 'student')
-  findOne(@Param('id') id: string) {
+  findByCourseID(@Param('id') id: string) {
     return this.modelService.findByCourseId(+id);
   }
 

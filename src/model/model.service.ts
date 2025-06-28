@@ -30,6 +30,17 @@ export class ModelService {
   async findByCourseId(courseId: number) {
     return this.modelRepo.find({ where: { course: { id: courseId } } });
   }
+
+  async findOne(id: number) {
+    const model = await this.modelRepo.findOne({
+      where: { id },
+      relations: ['course', 'lessons'],
+    });
+    if (!model) {
+      throw new Error('Bunday model mavjud emas');
+    }
+    return model;
+  }
   async update(id: number, dto: UpdateModelDto) {
     const model = await this.modelRepo.findOneBy({ id });
     if(!model){
