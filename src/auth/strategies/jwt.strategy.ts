@@ -4,7 +4,7 @@ import { ExtractJwt, Strategy } from 'passport-jwt';
 import { AuthService } from '../auth.service';
 
 @Injectable()
-export class JwtStrategy extends PassportStrategy(Strategy) {
+export class JwtStrategy extends PassportStrategy(Strategy,'jwt') {
   constructor(private authservice: AuthService) {
     
     if (!process.env.JWT_ACCESS_SECRET) {
@@ -17,6 +17,8 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(payload: any) {
+    console.log(payload);
+    
     return {
       id: payload.sub,
       email: payload.email,

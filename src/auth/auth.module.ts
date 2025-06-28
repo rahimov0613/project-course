@@ -10,11 +10,12 @@ import { JwtAuthGuard } from './guard/jwt-auth.guard';
 
 
 @Module({
-  imports:[UsersModule,JwtModule.register({
-    secret: process.env.JWT_SECRET,
-    signOptions: { expiresIn: '1d' },
-  })],
+  imports: [JwtModule.register({
+    secret: process.env.JWT_ACCESS_SECRET,
+    signOptions: { expiresIn: '1d' }, 
+  }),UsersModule],
   controllers: [AuthController,],
-  providers: [AuthService,JwtStrategy,],
+  providers: [AuthService, JwtStrategy,],
+  exports: [AuthService,JwtModule]
 })
-export class AuthModule {} 
+export class AuthModule { } 

@@ -6,38 +6,41 @@ import { UpdateAssignmentDto } from './dto/update-assignment.dto';
 import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
 import { RolesGuard } from 'src/auth/guard/roles.guard';
 import { Roles } from 'src/auth/decorators/role.decorator';
+import { User } from 'src/users/entities/user.entity';
 
 @UseGuards(JwtAuthGuard, RolesGuard)
 @Controller('assignment')
 export class AssignmentController {
   constructor(private readonly assignmentService: AssignmentService) { }
   @Post()
-  @Roles('student')
-  create(@Body() createAssignmentDto: CreateAssignmentDto, @Req() req: Request) {
-    const student = req.user as any;
-    return this.assignmentService.create(student, createAssignmentDto);
-  }
-
+  @Roles('student') 
+    create(@Body() createAssignmentDto: CreateAssignmentDto, @Req() req: Request) {
+      const student = req.user as any;
+      console.log(student);
+      
+      return this.assignmentService.create(student, createAssignmentDto);
+    }
+  
   @Get('/model/:modelId')
-  @Roles('teacher', 'admin')
+  // @Roles('teacher', 'admin')
   findByModel(@Param('modelId', ParseIntPipe) modelId: number) {
-    return this.assignmentService.findByModel(modelId);
+    return this.assignmentService.findByModel(modelId); 
   }
-
-  @Get(':id')
-  @Roles('teacher', 'admin', 'student')
+  
+  @Get(':id') 
+  // @Roles('teacher', 'admin', 'student')
   findOne(@Param('id') id: string) {
     return this.assignmentService.findOneById(+id);
   }
 
   @Patch(':id')
-  @Roles('student')
+  // @Roles('student')
   update(@Param('id') id: string, @Body() updateAssignmentDto: UpdateAssignmentDto) {
     return this.assignmentService.update(+id, updateAssignmentDto);
   }
-
+  
   @Delete(':id')
-  @Roles('student', 'admin')
+  // @Roles('student', 'admin')
   remove(@Param('id') id: string) {
     return this.assignmentService.remove(+id);
   }

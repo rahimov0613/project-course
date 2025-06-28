@@ -30,7 +30,7 @@ export class AssignmentService {
       student,
     });
     return this.assigmentRepo.save(assignment)
-  }
+  } 
 
   async findByModel(modelId: number) {
     return this.assigmentRepo.find({ where: { model: { id: modelId } }, relations: ['student'] })
@@ -43,7 +43,7 @@ export class AssignmentService {
     }
     return assignment
   }
-
+ 
   async update(id:number,dto:UpdateAssignmentDto){
     const assignment = await this.findOneById(id)
     if(!assignment){

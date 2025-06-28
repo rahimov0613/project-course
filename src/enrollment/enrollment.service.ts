@@ -49,7 +49,7 @@ export class EnrollmentService {
       relations: ['user', 'course'],
     });
     if (!enrollment) {
-      throw new Error("Bunday ro'yxatdan o'tish mavjud emas");
+      throw new Error("Bunday ro'yxatdan o'tgan mavjud emas");
     }
     return enrollment;
   }
@@ -57,11 +57,11 @@ export class EnrollmentService {
     const enrollment = await this.findOne(id);
     Object.assign(enrollment, dto);
     return this.enrollmentRepo.save(enrollment);
-  }
+  } 
   async remove(id: number): Promise<void> {
     const enrollment = await this.findOne(id);
     if (!enrollment) {
-      throw new Error("Bunday ro'yxatdan o'tish mavjud emas");
+      throw new Error("Bunday ro'yxatdan o'tgan mavjud emas");
     }
     await this.enrollmentRepo.remove(enrollment);
   }

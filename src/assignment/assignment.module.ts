@@ -10,7 +10,7 @@ import { ModelModule } from 'src/model/model.module';
 import { EnrollmentModule } from 'src/enrollment/enrollment.module';
 
 @Module({
-  imports:[TypeOrmModule.forFeature([Assignment]),ModelModule,EnrollmentModule],
+  imports:[TypeOrmModule.forFeature([Assignment,]),ModelModule,EnrollmentModule,],
   controllers: [AssignmentController],
   providers: [AssignmentService],
   exports:[AssignmentService]
