@@ -1,4 +1,5 @@
 import { Model } from "src/model/entities/model.entity";
+import { Result } from "src/results/entities/result.entity";
 import { User } from "src/users/entities/user.entity";
 import { Column, CreateDateColumn, Entity, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
