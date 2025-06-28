@@ -12,6 +12,7 @@ import { Model } from './model/entities/model.entity';
 import { Enrollment } from './enrollment/entities/enrollment.entity';
 import { LessonsModule } from './lessons/lessons.module';
 import { AssignmentModule } from './assignment/assignment.module';
+import { Assignment } from './assignment/entities/assignment.entity';
 
 @Module({
   imports: [
@@ -20,7 +21,7 @@ import { AssignmentModule } from './assignment/assignment.module';
       type: 'postgres',
       url: process.env.DATABASE_URL,
       autoLoadEntities: true,
-      entities: [User,Course,Model,Enrollment],  
+      entities: [User,Course,Model,Enrollment,Assignment],  
       synchronize: true,
     }),
     AuthModule,

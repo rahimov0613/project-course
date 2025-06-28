@@ -1,33 +1,43 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Req, ParseIntPipe } from '@nestjs/common';
+import { Request } from 'express';
 import { AssignmentService } from './assignment.service';
 import { CreateAssignmentDto } from './dto/create-assignment.dto';
 import { UpdateAssignmentDto } from './dto/update-assignment.dto';
+import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
+import { RolesGuard } from 'src/auth/guard/roles.guard';
+import { Roles } from 'src/auth/decorators/role.decorator';
 
+@UseGuards(JwtAuthGuard, RolesGuard)
 @Controller('assignment')
 export class AssignmentController {
-  constructor(private readonly assignmentService: AssignmentService) {}
-
+  constructor(private readonly assignmentService: AssignmentService) { }
   @Post()
-  create(@Body() createAssignmentDto: CreateAssignmentDto) {
-    return this.assignmentService.create(createAssignmentDto);
+  @Roles('student')
+  create(@Body() createAssignmentDto: CreateAssignmentDto, @Req() req: Request) {
+    const student = req.user as any;
+    return this.assignmentService.create(student, createAssignmentDto);
   }
 
-  @Get()
-  findAll() {
-    return this.assignmentService.findAll();
+  @Get('/model/:modelId')
+  @Roles('teacher', 'admin')
+  findByModel(@Param('modelId', ParseIntPipe) modelId: number) {
+    return this.assignmentService.findByModel(modelId);
   }
 
   @Get(':id')
+  @Roles('teacher', 'admin', 'student')
   findOne(@Param('id') id: string) {
-    return this.assignmentService.findOne(+id);
+    return this.assignmentService.findOneById(+id);
   }
 
   @Patch(':id')
+  @Roles('student')
   update(@Param('id') id: string, @Body() updateAssignmentDto: UpdateAssignmentDto) {
     return this.assignmentService.update(+id, updateAssignmentDto);
   }
 
   @Delete(':id')
+  @Roles('student', 'admin')
   remove(@Param('id') id: string) {
     return this.assignmentService.remove(+id);
   }
