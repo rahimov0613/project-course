@@ -1,3 +1,4 @@
+import { Assignment } from "src/assignment/entities/assignment.entity";
 import { Course } from "src/course/entities/course.entity";
 import { Enrollment } from "src/enrollment/entities/enrollment.entity";
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
@@ -29,4 +30,7 @@ export class User {
 
     @OneToMany(() => Course, (course) => course.teacher)
     courses: Course[];
+
+    @OneToMany(()=>Assignment,(assignment)=>assignment.student)
+    assignment:Assignment[]
 }
